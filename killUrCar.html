@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Kill Your Car</title>
+
+    <link rel="stylesheet" href="milligram.css">
+    <script type="text/javascript">
+      let years = 1 // length of ownership (needed because of annual costs associated with some things)
+      let costToBuy = 2000 // the intial purchange expense - this is really the big thing that needs to be justified
+      let annualCostOfOwnership = 50 // includes things like licensing/registration, periodic maintenance costs, parking/storage fees etc. this is going to be an estimate
+
+      let distanceUnit = 'miles'
+      let oldCostPerDistanceUnit = 0.25 // unleaded @ ~2.50 USD / gal with vehicle that gets ~ 20 mpg and not factoring other use costs (~2.50/20 = 0.125)  - or could use something like standard DOT milage rate (~.50 USD)
+      let newCostPerDistanceUnit = 0.1 // presumably would be less than oldCost -  might be zero if the dodge is avoiding the trip or if travel has no meaningful cost (ex. walking)
+      let distanceUnitsDodged = 2000 // your bike, scooter, or pedometer may have an odometer that helps you with this?
+
+
+      function crunchTheNumbers() {
+        console.log('should be crunching!')
+        // TODO: get form input vals
+        let cost = costToBuy + (annualCostOfOwnership * years)
+
+        let savings = distanceUnitsDodged * (oldCostPerDistanceUnit - newCostPerDistanceUnit)
+        let justified = (savings > cost)
+
+        let messageHtml = undefined
+        if (justified) {
+          messageHtml = '<h4>Do It!</h4>'
+        } else {
+          messageHtml = '<h4>Maybe it is not quite worth it...</h4>'
+        }
+        document.getElementById('justified_badge').innerHTML = messageHtml
+      }
+
+      function changeDistanceUnit() {
+        // TODO: get the unit value from select option
+        let selectEl = document.getElementById('unitPicker')
+        distanceUnit = selectEl.options[selectEl.selectedIndex].text
+        document.querySelectorAll('.distanceUnit').forEach( (node) => {
+          node.textContent = distanceUnit
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', function(event) {
+        document.getElementById('unitPicker').onchange = changeDistanceUnit
+        window.onsubmit = crunchTheNumbers
+      });
+
+    </script>
+  </head>
+
+  <body>
+    <h1>Kill Your Car</h1>
+    <h2>conventional ICE transportation dodge justify-er</h2>
+    <p id="about">
+      Use this to do things like figure out how many miles/kms you need to dodge/travel with some new device/mode before the expense to purchace it would be justified,
+      or how long it would take to justify if you dodge x miles/kms per year. etc etc.
+      <a href="#aboutMore">more...</a>
+    </p>
+    <hr>
+    <form id="mainForm">
+      <div class="float-right">
+        <label class="label-inline" for="unitPicker">Units</label>
+        <select id="unitPicker" name="unitPicker">
+          <option>mi.</option>
+          <option>km</option>
+        </select>
+      </div>
+      <fieldset>
+        <label for="costToBuy">
+          Cost To Purchace / Start
+        </label>
+        <input type="number" name="costToBuy" value="0" min="0">
+        <label for="annualCostOfOwnership">
+          Annual Cost of Ownership
+        </label>
+        <input type="number" name="annualCostOfOwnership" value="0" min="0">
+        <label for="costToBuy">
+          Cost To Purchace / Start
+        </label>
+        <input type="number" name="costToBuy" value="0" min="0">
+        <label for="oldCostPerDistanceUnit">
+          Old mode of transport's cost per <span class="distanceUnit">mile</span>
+        </label>
+        <input type="number" name="oldCostPerDistanceUnit" value="0" min="0">
+        <label for="newCostPerDistanceUnit">
+          Old transport dodge cost per <span class="distanceUnit">mile</span>
+        </label>
+        <input type="number" name="newCostPerDistanceUnit" value="0">
+        <label for="distanceUnitsDodged">
+          <span class="distanceUnit">mile</span>s Dodged
+        </label>
+        <input type="number" name="distanceUnitsDodged" value="0" min="0">
+        <input type="submit" value="Crunch the numbers" />
+      </fieldset>
+    </form>
+    <div id="justified_badge">
+      ???
+    </div>
+    <div id="aboutMore">
+      <h3>Why</h3>
+      <p>
+        The upfront cost or simply pschological inertia can be barriers to adopting newer, less established, yet more efficient ways of doing things. In most countries I have been to or lived in, cars with traditional internal combustion engines (ICE) have played too large a roll in shaping society - in many ways for the worse.
+        At least in the midwestern US, where I live, owning at least one vehicle is simply a practical necessity, and the general attitude towards alternatives is not great, but that isn't to say alternative modes don't exist here, they do, it's just that sociological and psychological barriers are a bit higher, so the need to justify is higher, so some simple tools to help increase the appeal in some way can't hurt.
+      </p>
+      <h3>There is more than $$ though, right?</h3>
+      <p>
+        Yes, Definitely! and there is more than the individual to consider as well. but it's good to start small sometimes, so this tool focuses on the microeconmic factor in simplistic terms. So far this is a purely economic justification which is a gross oversimplification. (much like <a href="#todoPutLinkToGPIvsGDPhere">GDP</a>)
+        The aesthetic or ethical differences between alternatives are as significant if not more so than the economic ones, but they are not easily handled by numerical formulas, and most people aren't used to factoring those things.
+      </p>
+      <p>
+        Still, it may be reasonable to put a monetary value on those other factors for the sake of contemplation.
+        This can be done with simple multipliers. Either on the old modes cost per mi/km (call it a carbon tax?), on the new modes cost per mi/km (or making this a negative number a health/wellness bonus), or alternatively as a multiplier on the number of mi/km dodged. if a unit walking is worth 3 units driven because of the health benefit or whatever.
+      </p>
+    </div>
+  </body>
+</html>
