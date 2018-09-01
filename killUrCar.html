@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="milligram.css">
     <script type="text/javascript">
-      let years = 1 // length of ownership (needed because of annual costs associated with some things)
+      let yearsOwned = 1 // length of ownership (needed because of annual costs associated with some things)
       let costToBuy = 2000 // the intial purchange expense - this is really the big thing that needs to be justified
       let annualCostOfOwnership = 50 // includes things like licensing/registration, periodic maintenance costs, parking/storage fees etc. this is going to be an estimate
 
@@ -19,14 +19,20 @@
       function crunchTheNumbers(ev) {
         ev.preventDefault();
         console.log('should be crunching!')
-        // TODO: get form input vals
         let form = document.getElementById('mainForm')
-        let valSet = Object.values(form.elements).reduce((obj,field) => { obj[field.name] = field.value; return obj }, {})
-        console.log(valSet)
+        let formValSet = Object.values(form.elements).reduce((obj,field) => { obj[field.name] = field.value; return obj }, {})
+        console.log(formValSet)
 
-        let cost = costToBuy + (annualCostOfOwnership * years)
+        costToBuy = parseInt(formValSet.costToBuy)
+        annualCostOfOwnership = parseFloat(formValSet.annualCostOfOwnership)
+        yearsOwned = parseFloat(formValSet.yearsOwned)
+        let cost = costToBuy + (annualCostOfOwnership * yearsOwned)
 
+        distanceUnitsDodged = parseInt(formValSet.distanceUnitsDodged)
+        oldCostPerDistanceUnit = parseFloat(formValSet.oldCostPerDistanceUnit)
+        newCostPerDistanceUnit = parseFloat(formValSet.newCostPerDistanceUnit)
         let savings = distanceUnitsDodged * (oldCostPerDistanceUnit - newCostPerDistanceUnit)
+
         let justified = (savings > cost)
 
         let messageHtml = '<p>with a cost of $'+ cost + ' and a savings of $' + savings + '.</p>'
