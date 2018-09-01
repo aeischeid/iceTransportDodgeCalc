@@ -23,6 +23,7 @@
         let form = document.getElementById('mainForm')
         let valSet = Object.values(form.elements).reduce((obj,field) => { obj[field.name] = field.value; return obj }, {})
         console.log(valSet)
+
         let cost = costToBuy + (annualCostOfOwnership * years)
 
         let savings = distanceUnitsDodged * (oldCostPerDistanceUnit - newCostPerDistanceUnit)
@@ -77,22 +78,39 @@
           Cost To Purchace / Start
         </label>
         <input type="number" name="costToBuy" value="0" min="0">
-        <label for="annualCostOfOwnership">
-          Annual Cost of Ownership
-        </label>
-        <input type="number" name="annualCostOfOwnership" value="0" min="0">
-        <label for="costToBuy">
-          Cost To Purchace / Start
-        </label>
-        <input type="number" name="costToBuy" value="0" min="0">
-        <label for="oldCostPerDistanceUnit">
-          Old mode of transport's cost per <span class="distanceUnit">mile</span>
-        </label>
-        <input type="number" name="oldCostPerDistanceUnit" value="0" min="0" step="0.01">
-        <label for="newCostPerDistanceUnit">
-          New transport dodge cost per <span class="distanceUnit">mile</span>
-        </label>
-        <input type="number" name="newCostPerDistanceUnit" value="0" step="0.01">
+
+        <div class="row">
+
+          <div class="column">
+            <label for="annualCostOfOwnership">
+              Annual Cost of Ownership
+            </label>
+            <input type="number" name="annualCostOfOwnership" value="0" min="0">
+          </div>
+          <div class="column">
+
+            <label for="yearsOwned">
+              Years Owned
+            </label>
+            <input type="number" name="yearsOwned" value="0" min="0">
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+
+            <label for="oldCostPerDistanceUnit">
+              Old mode of transport's cost per <span class="distanceUnit">mile</span>
+            </label>
+            <input type="number" name="oldCostPerDistanceUnit" value="0" min="0" step="0.01">
+          </div>
+          <div class="column">
+
+            <label for="newCostPerDistanceUnit">
+              New transport dodge cost per <span class="distanceUnit">mile</span>
+            </label>
+            <input type="number" name="newCostPerDistanceUnit" value="0" step="0.01">
+          </div>
+        </div>
         <label for="distanceUnitsDodged">
           <span class="distanceUnit">mile</span>s Dodged
         </label>
