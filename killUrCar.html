@@ -65,6 +65,7 @@
   <body>
     <h1>Kill Your Car</h1>
     <h2>conventional ICE transportation dodge justify-er</h2>
+
     <p id="about">
       Use this to do things like figure out how many miles/kms you need to dodge/travel with some new device/mode before the expense to purchace it would be justified,
       or how long it would take to justify if you dodge x miles/kms per year. etc etc.
@@ -72,14 +73,9 @@
     </p>
     <hr>
     <form id="mainForm" onsubmit="crunchTheNumbers(event)">
-      <div class="float-right">
-        <label class="label-inline" for="unitPicker">Units</label>
-        <select id="unitPicker" name="unitPicker">
-          <option>mi.</option>
-          <option>km</option>
-        </select>
-      </div>
+
       <fieldset>
+        <legend>The new thing:</legend>
         <label for="costToBuy">
           Cost To Purchace / Start
         </label>
@@ -101,6 +97,9 @@
             <input type="number" name="yearsOwned" value="2" min="0">
           </div>
         </div>
+      </fieldset>
+      <fieldset>
+        <legend>Efficiency difference:</legend>
         <div class="row">
           <div class="column">
 
@@ -146,6 +145,25 @@
         Still, it may be reasonable to put a monetary value on those other factors for the sake of contemplation.
         This can be done with simple multipliers. Either on the old modes cost per mi/km (call it a carbon tax?), on the new modes cost per mi/km (or making this a negative number a health/wellness bonus), or alternatively as a multiplier on the number of mi/km dodged. if a unit walking is worth 3 units driven because of the health benefit or whatever.
       </p>
+    </div>
+
+    <h4>Settings</h4>
+    <div class="row">
+      <div class="column">
+        <label class="label-inline" for="unitPicker">Distance Units</label>
+        <select id="unitPicker" name="unitPicker">
+          <option>mi.</option>
+          <option>km</option>
+        </select>
+      </div>
+      <div class="column">
+        <label class="label-inline" for="unitPicker">Monetary Units</label>
+        <select id="unitPicker2" name="unitPicker2">
+          <option>$</option>
+          <option>&euro;</option>
+          <option>&pound;</option>
+        </select>
+      </div>
     </div>
   </body>
 </html>
