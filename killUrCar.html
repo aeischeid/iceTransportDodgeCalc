@@ -10,15 +10,19 @@
       let costToBuy = 2000 // the intial purchange expense - this is really the big thing that needs to be justified
       let annualCostOfOwnership = 50 // includes things like licensing/registration, periodic maintenance costs, parking/storage fees etc. this is going to be an estimate
 
-      let distanceUnit = 'miles'
+      let distanceUnit = 'mi'
       let oldCostPerDistanceUnit = 0.25 // unleaded @ ~2.50 USD / gal with vehicle that gets ~ 20 mpg and not factoring other use costs (~2.50/20 = 0.125)  - or could use something like standard DOT milage rate (~.50 USD)
       let newCostPerDistanceUnit = 0.1 // presumably would be less than oldCost -  might be zero if the dodge is avoiding the trip or if travel has no meaningful cost (ex. walking)
       let distanceUnitsDodged = 2000 // your bike, scooter, or pedometer may have an odometer that helps you with this?
 
 
-      function crunchTheNumbers() {
+      function crunchTheNumbers(ev) {
+        ev.preventDefault();
         console.log('should be crunching!')
         // TODO: get form input vals
+        let form = document.getElementById('mainForm')
+        let valSet = Object.values(form.elements).reduce((obj,field) => { obj[field.name] = field.value; return obj }, {})
+        console.log(valSet)
         let cost = costToBuy + (annualCostOfOwnership * years)
 
         let savings = distanceUnitsDodged * (oldCostPerDistanceUnit - newCostPerDistanceUnit)
@@ -30,7 +34,8 @@
         } else {
           messageHtml = '<h4>Maybe it is not quite worth it...</h4>'
         }
-        document.getElementById('justified_badge').innerHTML = messageHtml
+        document.getElementById('justified_badge').innerHTML = messageHtml;
+        return false;
       }
 
       function changeDistanceUnit() {
@@ -44,7 +49,7 @@
 
       document.addEventListener('DOMContentLoaded', function(event) {
         document.getElementById('unitPicker').onchange = changeDistanceUnit
-        window.onsubmit = crunchTheNumbers
+        // window.onsubmit = crunchTheNumbers
       });
 
     </script>
@@ -59,7 +64,7 @@
       <a href="#aboutMore">more...</a>
     </p>
     <hr>
-    <form id="mainForm">
+    <form id="mainForm" onsubmit="crunchTheNumbers(event)">
       <div class="float-right">
         <label class="label-inline" for="unitPicker">Units</label>
         <select id="unitPicker" name="unitPicker">
@@ -83,11 +88,11 @@
         <label for="oldCostPerDistanceUnit">
           Old mode of transport's cost per <span class="distanceUnit">mile</span>
         </label>
-        <input type="number" name="oldCostPerDistanceUnit" value="0" min="0">
+        <input type="number" name="oldCostPerDistanceUnit" value="0" min="0" step="0.01">
         <label for="newCostPerDistanceUnit">
-          Old transport dodge cost per <span class="distanceUnit">mile</span>
+          New transport dodge cost per <span class="distanceUnit">mile</span>
         </label>
-        <input type="number" name="newCostPerDistanceUnit" value="0">
+        <input type="number" name="newCostPerDistanceUnit" value="0" step="0.01">
         <label for="distanceUnitsDodged">
           <span class="distanceUnit">mile</span>s Dodged
         </label>
